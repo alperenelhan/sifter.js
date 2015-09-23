@@ -363,12 +363,12 @@
 			self.iterator(self.items, function(item, id) {
 				score = fn_score(item);
 				if (options.filter === false || score > 0) {
-					search.items.push({'score': score, 'id': id});
+					search.items.push({'item': item, 'score': score, 'id': id});
 				}
 			});
 		} else {
 			self.iterator(self.items, function(item, id) {
-				search.items.push({'score': 1, 'id': id});
+				search.items.push({'item': item, 'score': 1, 'id': id});
 			});
 		}
 
