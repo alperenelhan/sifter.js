@@ -135,6 +135,7 @@
 
 			if (!value) return 0;
 			value = String(value || '');
+			value = self.slugify(value);
 			pos = value.search(token.regex);
 			if (pos === -1) return 0;
 			score = token.string.length / value.length;
@@ -314,6 +315,8 @@
 		if (option_sort && !is_array(option_sort)) options.sort = [option_sort];
 		if (option_sort_empty && !is_array(option_sort_empty)) options.sort_empty = [option_sort_empty];
 
+		query = this.slugify(query);
+
 		return {
 			options : options,
 			query   : String(query || '').toLowerCase(),
@@ -321,6 +324,23 @@
 			total   : 0,
 			items   : []
 		};
+	};
+
+	Sifter.prototype.slugify = function(text) {
+		var trMap = {
+	        'çÇ':'c',
+	        'ğĞ':'g',
+	        'şŞ':'s',
+	        'üÜ':'u',
+	        'ıİ':'i',
+	        'öÖ':'o'
+	    };
+	    
+	    for(var key in trMap) {
+	        text = text.replace(new RegExp('['+key+']','g'), trMap[key]);
+	    }
+
+	    return text;
 	};
 
 	/**
